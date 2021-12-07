@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             width: 100vw;
+             height: 100vh;  
+             background-color: cornflowerblue;
+        }
+        
+        .container {
+            display: inline-block;
+            direction: rtl;
+        }
+
+        button {
+            background-color: plum;
+            border: 2px solid darkorchid;
+            width: 150px;
+            height: 90px;
+            border-radius: 10px;
+        }
+
+        #Stopwatch {
+            font-size: 100px;
+            font: sans-serif;
+            color: darkblue;
+            background-color: yellow;
+            border: 2px solid orange;
+            border-radius: 20px;
+        }
+    </style>
+    <title>Stopwatch</title>
+</head>
+<body>
+    <div id="Stopwatch">
+        00:00:00 (00)
+    </div>
+    <div class="container">
+    <button onclick="Start()">Start</button>
+    <button onclick="Stop()">Stop</button>
+    <button onclick="Reset()">Reset</button>
+    </div>
+    <script>
+        let Stopwatch = document.getElementById('Stopwatch');
+        let sec = 0;
+        let min = 0;
+        let hr = 0;
+        let msec = 0;
+        let timerfreeze = true;
+
+        function Start(){
+            if (timerfreeze==true) {
+                timerfreeze = false;
+                runtime();                 
+            }
+        }
+
+        function Stop(){
+           if (timerfreeze==false) {
+               timerfreeze = true;
+           }
+        }
+
+        function runtime(){
+            if (timerfreeze==false) {
+            sec = parseInt(sec);
+            min = parseInt(min);
+            hr = parseInt(hr);
+            msec = parseInt(msec);
+            msec = msec+1;
+            if (msec==100) {
+                sec = sec+1;
+                msec = 0;
+            }
+
+            if (sec==60) {
+                min = min+1;
+                sec = 0;
+                msec = 0;
+            }
+
+            if (min==60) {
+                hr = hr+1;
+                min = 0;
+                sec = 0;
+                msec = 0;
+            }
+
+            if (msec<10) {
+                msec = '0'+msec;
+            }
+
+            if (sec<10) {
+                sec = '0'+sec;
+            }
+
+            if (min<10) {
+                min = '0'+min;
+            }
+
+            if (hr<10) {
+                hr = '0'+hr;
+            }
+
+            Stopwatch.innerHTML = hr + ":" + min + ":" + sec + "( "+ msec +" )";
+            setTimeout("runtime()",10);
+          }
+        }
+        function Reset(){
+                timerfreeze = true;
+                msec = 0;
+                sec = 0;
+                min = 0;
+                hr = 0;
+                Stopwatch.innerHTML = "00:00:00(00)"
+            }
+    </script>
+</body>
+</html>
